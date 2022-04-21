@@ -2,37 +2,50 @@ import time
 import os
 from threading import Thread
 from selenium import webdriver
+import sys
 
+for i in range(0,len(sys.argv)):
+	print(sys.argv[i])
 
-username = os.environ.get("LT_USERNAME")
-access_key = os.environ.get("LT_ACCESS_KEY")
+username = "mlqanormal1"
+access_key = "WuQC25ZvNl9dUOfsoWe67qo9sAxGLIMutLSolYdwTFEpxNNZa0"
 
 
 def get_browser(caps):
 	return webdriver.Remote(
-            command_executor="https://{}:{}@hub.lambdatest.com/wd/hub".format(username, access_key),
+            command_executor="https://{}:{}@stage-hub.lambdatest.com/wd/hub".format(username, access_key),
             desired_capabilities=caps
         )
 
-# You can configure your test capabilities here 
+# You can configure your test capabilities here
+# browsers = [
+#     {"build": 'PyunitTest sample build bigsur Implicit',"name": "Test 17", "platform": "win10","browserName": "Firefox", "version": "82", "selenium_version": "4.1.0"},
+#     {"build": 'PyunitTest sample build bigsur Implicit',"name": "Test 18", "platform": "bigsur","browserName": "Firefox", "version": "81", "selenium_version": "4.1.0"},
+#     {"build": 'PyunitTest sample build bigsur Implicit',"name": "Test 19", "platform": "win11","browserName": "Firefox", "version": "80", "selenium_version": "4.1.0"}
+# ]
 browsers = [
-    {"build": 'PyunitTest sample build',"name": "Test 1", "platform": "Windows 10","browserName": "Chrome", "version": "latest", "selenium_version": "4.1.0"},
-    {"build": 'PyunitTest sample build',"name": "Test 2", "platform": "Windows 10","browserName": "Firefox", "version": "latest", "selenium_version": "4.1.0"}
+	{"build": 'PyunitTest sample build bigsur Implicit',"name": "Test 17", "platform": sys.argv[1],"browserName": sys.argv[2], "version": sys.argv[3], "selenium_version": sys.argv[4]}
 ]
+
+print(browsers)
+
 browsers_waiting = []
 
 # Running the test cases
 def get_browser_and_wait(browser_data):
 	print ("starting %s" % browser_data["name"])
 	browser = get_browser(browser_data)
-	browser.set_window_size(1600, 1200)
 	browser.get("https://lambdatest.com")
 	browsers_waiting.append({"data": browser_data, "driver": browser})
 	print ("%s ready" % browser_data["name"])
 	while len(browsers_waiting) < len(browsers):
 		print ("browser %s sending heartbeat while waiting" % browser_data["name"])
 		browser.get("https://lambdatest.com")
-		time.sleep(3)
+		browser.set_window_size(1600, 1200)
+		time.sleep(10)
+		print (browser.get_window_size())
+		# browser.maximize_window()
+		# print (browser.get_window_size())
 
 
 thread_list = []
@@ -46,5 +59,7 @@ for t in thread_list:
 
 
 for i, b in enumerate(browsers_waiting):
+	b["driver"].implicitly_wait(10)
+	print ("Implicit wait completed")
 	print ("browser %s's title: %s" % (b["data"]["name"], b["driver"].title))
 	b["driver"].quit()
