@@ -5,10 +5,14 @@ import sys
 
 if len(sys.argv) < 4:
     print("4 argsuments must required, 1.platform 2.browserName 3.version 4.selenium_version")
+    exit(1)
 
-username = "mlqanormal1"
-access_key = "WuQC25ZvNl9dUOfsoWe67qo9sAxGLIMutLSolYdwTFEpxNNZa0"
-grid = "stage-hub.lambdatest.com/wd/hub"
+url = "https://mlqanormal1:WuQC25ZvNl9dUOfsoWe67qo9sAxGLIMutLSolYdwTFEpxNNZa0@stage-hub.lambdatest.com/wd/hub"
+
+
+# username = "mlqanormal1"
+# access_key = "WuQC25ZvNl9dUOfsoWe67qo9sAxGLIMutLSolYdwTFEpxNNZa0"
+# grid = "stage-hub.lambdatest.com/wd/hub"
 
 sdOptions = {"deviceName": "mobile", "deviceShortName": "m", "runId": "1v85xg", "siteConfig": {
     "authoritativeCountries": [
@@ -63,7 +67,7 @@ ieOptions = webdriver.IeOptions()
 operaOptions = {}
 safariOptions = {}
 
-print(sys.argv[2])
+# print(sys.argv[2])
 
 if sys.argv[2] == 'chrome':
     mobile_emulation = {"deviceName": "iPhone X"}
@@ -127,27 +131,27 @@ print(DesiredCapabilities.INTERNETEXPLORER)
 if sys.argv[2] == "chrome":
     for arg, value in args.items():
         chromeOptions.set_capability(arg, value)
-    driver = webdriver.Remote(command_executor=f'https://{user}:{key}@{grid}', options=chromeOptions)
+    driver = webdriver.Remote(command_executor=url, options=chromeOptions)
 elif sys.argv[2] == "firefox":
     for arg, value in args.items():
         firefoxOptions.set_capability(arg, value)
-    driver = webdriver.Remote(command_executor=f'https://{user}:{key}@{grid}', options=firefoxOptions)
+    driver = webdriver.Remote(command_executor=url, options=firefoxOptions)
 elif sys.argv[2] == "edge":
     for arg, value in args.items():
         edgeOptions.set_capability(arg, value)
-    driver = webdriver.Remote(command_executor=f'https://{user}:{key}@{grid}', options=edgeOptions)
+    driver = webdriver.Remote(command_executor=url, options=edgeOptions)
 elif sys.argv[2] == "internet explorer":
     for arg, value in args.items():
         ieOptions.set_capability(arg, value)
-    driver = webdriver.Remote(command_executor=f'https://{user}:{key}@{grid}', options=ieOptions)
+    driver = webdriver.Remote(command_executor=url, options=ieOptions)
 elif sys.argv[2] == "opera":
     for arg, value in args.items():
         operaOptions.set_capability(arg, value)
-    driver = webdriver.Remote(command_executor=f'https://{user}:{key}@{grid}', options=operaOptions)
+    driver = webdriver.Remote(command_executor=url, options=operaOptions)
 elif sys.argv[2] == "safari":
     for arg, value in args.items():
         safariOptions.set_capability(arg, value)
-    driver = webdriver.Remote(command_executor=f'https://{user}:{key}@{grid}', options=safariOptions)
+    driver = webdriver.Remote(command_executor=url, options=safariOptions)
 else:
     print("wrong browserName passed")
     exit(1)
