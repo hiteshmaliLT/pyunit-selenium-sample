@@ -45,7 +45,7 @@ cjson = {
     }
 }
 ltOptions = {
-    "browserName": "chrome",
+    "browserName": sys.argv[2],
     "build": "master Run ID: 1v85xg Run: ZqGV19",
     "console": True,
     "geoLocation": "HK",
@@ -55,9 +55,9 @@ ltOptions = {
         }
     },
     "network": True,
-    "platformName": "Windows 11",
-    "selenium_version": "4.1.0",
-    "version": "99.0"
+    "platformName": sys.argv[1],
+    "selenium_version": sys.argv[4],
+    "version": sys.argv[3]
 }
 
 chromeOptions = webdriver.ChromeOptions()
