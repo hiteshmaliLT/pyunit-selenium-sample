@@ -112,7 +112,7 @@ args = {
     "headless": False,
     "network": True,
     "performance": False,
-    "platformName": "Windows 11",
+    "platformName": sys.argv[1],
     "resolution": "1920x1080",
     "tunnel": False,
     "tunnelIdentifier": "",
