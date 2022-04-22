@@ -5,55 +5,19 @@ import sys
 
 if len(sys.argv) < 4:
     print("4 argsuments must required, 1.platform 2.browserName 3.version 4.selenium_version")
-    exit(1)
+
+# user = "chandrajeetn"
+# key = "Ste8T3IpWrPErZkJTwu8wEEbllI3LqX0DXnQnWFsR0BjzKdHh7"
+# grid = "stage-hub.lambdatest.com/wd/hub"
 
 url = "https://mlqanormal1:WuQC25ZvNl9dUOfsoWe67qo9sAxGLIMutLSolYdwTFEpxNNZa0@stage-hub.lambdatest.com/wd/hub"
 
 
-# username = "mlqanormal1"
-# access_key = "WuQC25ZvNl9dUOfsoWe67qo9sAxGLIMutLSolYdwTFEpxNNZa0"
-# grid = "stage-hub.lambdatest.com/wd/hub"
-
-sdOptions = {"deviceName": "mobile", "deviceShortName": "m", "runId": "1v85xg", "siteConfig": {
-    "authoritativeCountries": [
-        "HKG"
-    ],
-    "canonicalDomain": "hk.20220411.dynamic.prometheus.sd.co.uk/hk-en/",
-    "currency": "HKD",
-    "defaultCountryCode": "HKG",
-    "defaultLocale": "en-HK",
-    "deliveryCountries": [
-        {
-            "code": "HKG",
-            "name": "Hong Kong",
-            "taxExcluded": True,
-            "taxRate": 0
-        }
-    ],
-    "orderNumberPrefix": "SUPERDRYHKEN"
-}}
-
-cjson = {
-    "app": {
-        "name": "HKG",
-        "version": "en-HK"
-    },
-    "device": "Mobile",
-    "platform": {
-        "name": "ios",
-        "version": " "
-    }
-}
 ltOptions = {
     "browserName": sys.argv[2],
-    "build": "master Run ID: 1v85xg Run: ZqGV19",
+    "build": sys.argv[1] + sys.argv[2] + sys.argv[4],
     "console": True,
-    "geoLocation": "HK",
-    "goog:chromeOptions": {
-        "mobileEmulation": {
-            "deviceName": "iPhone X"
-        }
-    },
+    "geoLocation": "US",
     "network": True,
     "platformName": sys.argv[1],
     "selenium_version": sys.argv[4],
@@ -64,10 +28,10 @@ chromeOptions = webdriver.ChromeOptions()
 firefoxOptions = webdriver.FirefoxOptions()
 edgeOptions = webdriver.EdgeOptions()
 ieOptions = webdriver.IeOptions()
-operaOptions = {}
-safariOptions = {}
+operaOptions = webdriver.IeOptions()
+safariOptions = webdriver.IeOptions()
 
-# print(sys.argv[2])
+print(sys.argv[2])
 
 if sys.argv[2] == 'chrome':
     mobile_emulation = {"deviceName": "iPhone X"}
@@ -75,8 +39,6 @@ if sys.argv[2] == 'chrome':
     chromeOptions.add_argument("use-fake-ui-for-media-stream")
     chromeOptions.add_argument("use-fake-device-for-media-stream")
     chromeOptions.set_capability("browserName", DesiredCapabilities.CHROME)
-    chromeOptions.set_capability("SD:Options", sdOptions)
-    chromeOptions.set_capability("cjson:metadata", cjson)
     chromeOptions.set_capability("LT:Options", ltOptions)
 elif sys.argv[2] == "firefox":
     firefoxOptions.set_preference("dom.webnotifications.serviceworker.enabled", False)
@@ -84,7 +46,7 @@ elif sys.argv[2] == "firefox":
     firefoxOptions.add_argument('--headless')
 elif sys.argv[2] == "edge":
     edgeOptions.set_capability("setPageLoadStrategy", "eager")
-elif sys.argv[2] == "internet explorer":
+elif sys.argv[2] == "ie":
     ieOptions.set_capability("setUseTechnologyPreview", True)
     ieOptions.set_capability("ie.usePerProcessProxy", True)
     ieOptions.set_capability("requireWindowFocus", False)
@@ -92,10 +54,12 @@ elif sys.argv[2] == "internet explorer":
     ieOptions.set_capability("ie.ensureCleanSession", True)
 elif sys.argv[2] == "opera":
     opera = {"args": ["--use-fake-ui-for-media-stream", "--use-fake-device-for-media-stream"]}
-    operaOptions["OperaOptions"] = opera
+    operaOptions.set_capability("OperaOptions", opera)
+    operaOptions.set_capability("browserName", "opera")
 elif sys.argv[2] == "safari":
     safari = {"setUseTechnologyPreview": True}
-    safariOptions["safariOptions"] = safari
+    safariOptions.set_capability("safariOptions", safari)
+    safariOptions.set_capability("browserName", "safari")
 
 args = {
     "platform": sys.argv[1],
@@ -104,7 +68,7 @@ args = {
     "selenium_version": sys.argv[4],
     "acceptInsecureCerts": True,
     "acceptSslCerts": True,
-    "build": "alwaysMatch",
+    "build": sys.argv[1] + sys.argv[2] + sys.argv[4],
     "console": "true",
     "enableNetworkThrottling": True,
     "extendedDebuging": True,
@@ -112,11 +76,9 @@ args = {
     "headless": False,
     "network": True,
     "performance": False,
-    "platformName": sys.argv[1],
     "resolution": "1920x1080",
     "tunnel": False,
     "tunnelIdentifier": "",
-    "userAgent": "webdriver/7.16.16",
     "video": True,
     "visual": False,
     "w3c": True
@@ -140,7 +102,7 @@ elif sys.argv[2] == "edge":
     for arg, value in args.items():
         edgeOptions.set_capability(arg, value)
     driver = webdriver.Remote(command_executor=url, options=edgeOptions)
-elif sys.argv[2] == "internet explorer":
+elif sys.argv[2] == "ie":
     for arg, value in args.items():
         ieOptions.set_capability(arg, value)
     driver = webdriver.Remote(command_executor=url, options=ieOptions)
@@ -157,7 +119,6 @@ else:
     exit(1)
 
 print("session created ", driver.session_id)
-# driver.implicitly_wait(30)
 driver.get("https://www.google.com")
 time.sleep(1)
 driver.quit()
