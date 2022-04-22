@@ -24,7 +24,7 @@ def get_browser(caps):
 #     {"build": 'PyunitTest sample build bigsur Implicit',"name": "Test 19", "platform": "win11","browserName": "Firefox", "version": "80", "selenium_version": "4.1.0"}
 # ]
 browsers = [
-	{"build": 'PyunitTest sample build bigsur Implicit',"name": "Test 1", "platform": sys.argv[1],"browserName": sys.argv[2], "version": sys.argv[3], "selenium_version": sys.argv[4]}
+	{"build": 'PyunitTest sample build bigsur Implicit',"name": "Test 1", "platform": sys.argv[0],"browserName": sys.argv[1], "version": sys.argv[2], "selenium_version": sys.argv[3]}
 ]
 
 print(browsers)
