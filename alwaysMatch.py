@@ -157,7 +157,7 @@ else:
     exit(1)
 
 print("session created ", driver.session_id)
-driver.implicitly_wait(30)
+# driver.implicitly_wait(30)
 driver.get("https://www.google.com")
 time.sleep(1)
 driver.quit()
