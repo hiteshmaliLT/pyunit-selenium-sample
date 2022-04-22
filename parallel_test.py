@@ -1,8 +1,11 @@
+print("len of sys",len(sys.argv))
+
 import time
 import os
 from threading import Thread
 from selenium import webdriver
 import sys
+
 
 for i in range(0,len(sys.argv)):
 	print(sys.argv[i])
