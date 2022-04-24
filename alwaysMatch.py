@@ -12,7 +12,7 @@ if len(sys.argv) < 4:
 
 # url = "https://mlqanormal1:WuQC25ZvNl9dUOfsoWe67qo9sAxGLIMutLSolYdwTFEpxNNZa0@stage-hub.lambdatest.com/wd/hub"
 
- url = "https://hiteshmlambdatest:EVhnNat5N8cksDV6LJuUtXHcmK7Vdjpb5eZE4MBV5gK1FRrJSt@hub.lambdatest.com/wd/hub"
+url = "https://hiteshmlambdatest:EVhnNat5N8cksDV6LJuUtXHcmK7Vdjpb5eZE4MBV5gK1FRrJSt@hub.lambdatest.com/wd/hub"
 
 
 ltOptions = {
